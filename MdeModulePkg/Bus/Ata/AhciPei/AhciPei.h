@@ -22,6 +22,7 @@
 #include <Ppi/BlockIo.h>
 #include <Ppi/BlockIo2.h>
 #include <Ppi/StorageSecurityCommand.h>
+#include <Protocol/PciIo.h>
 
 #include <Library/DebugLib.h>
 #include <Library/PeiServicesLib.h>
@@ -73,6 +74,8 @@ typedef struct _PEI_AHCI_CONTROLLER_PRIVATE_DATA PEI_AHCI_CONTROLLER_PRIVATE_DAT
 #define AHCI_PI_OFFSET  0x000C
 
 #define AHCI_MAX_PORTS  32
+
+#define EFI_AHCI_BAR_INDEX  0x05
 
 typedef struct {
   UINT32    Lower32;
@@ -308,9 +311,9 @@ typedef struct {
 //
 struct _PEI_AHCI_CONTROLLER_PRIVATE_DATA {
   UINT32                                Signature;
-  UINTN                                 MmioBase;
   UINTN                                 DevicePathLength;
   EFI_DEVICE_PATH_PROTOCOL              *DevicePath;
+  EFI_PCI_IO_PROTOCOL                   *PciIo;
 
   EFI_ATA_PASS_THRU_MODE                AtaPassThruMode;
   EDKII_PEI_ATA_PASS_THRU_PPI           AtaPassThruPpi;
